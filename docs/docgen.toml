@@ -1,0 +1,8 @@
+# docgen Configuration
+[config]
+  title = "My Documentation"
+  description = "A description of the documentation..."
+  author = "Your Name"
+  version = "1.0"
+  theme = "default"
+  output = "out"
