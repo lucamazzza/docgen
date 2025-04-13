@@ -3,6 +3,7 @@ project(dg VERSION 1.0.0 LANGUAGES CXX)
 
 set(CMAKE_CXX_STANDARD 17)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
+set(CMAKE_BINARY_DIR ${CMAKE_SOURCE_DIR}/out)
 
 add_executable(dg src/main.cc src/cmds.cc src/export.cc src/utils.cc src/const.cc)
 
@@ -17,13 +18,3 @@ install(TARGETS dg
 )
 
 set(CPACK_GENERATOR "DEB;RPM;")
-
-include(FetchContent)
-FetchContent_Declare(
-    tomlplusplus
-    GIT_REPOSITORY https://github.com/marzer/tomlplusplus.git
-    GIT_TAG v3.4.0
-)
-FetchContent_MakeAvailable(tomlplusplus)
-
-target_link_libraries(dg PRIVATE tomlplusplus::tomlplusplus)

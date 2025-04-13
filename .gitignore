@@ -40,6 +40,9 @@
 *.out
 *.app
 
+# Build directory
+build/
+
 # Files with no extension
 
 
