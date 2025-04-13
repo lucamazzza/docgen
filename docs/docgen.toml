@@ -1,7 +1,6 @@
-[config]
-  title = "My Documentation"
-  description = "A description of the Documentation"
-  author = "Your Name"
-  version = "1.0.0"
-  theme = "default"
-  toc = false
+title = "My Documentation"
+description = "A description of the Documentation"
+author = "Luca Mazza"
+version = "1.0.0"
+theme = "default"
+toc = true 

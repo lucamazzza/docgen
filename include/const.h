@@ -34,6 +34,7 @@ extern const std::string E_EMPTY_DIRECTORY;
 extern const std::string U_BASE_URL_GITHUB;
 extern const std::string U_DEFAULT_PATH_GITHUB;
 extern const std::string U_SCAFFOLDED_TOML;
+extern const std::string U_SCAFFOLDED_THEME;
 
 // PATHS
 extern const std::string P_DEFAULT_SCAFFOLD_PATH;

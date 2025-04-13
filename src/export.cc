@@ -18,6 +18,7 @@ void runExport() {
   const std::string &theme{tbl["theme"].value_or("default")};
   const bool &toc{tbl["toc"].value_or(true)};
 
+  std::cout << tbl;
   path docsPath{P_DEFAULT_SCAFFOLD_PATH};
   path contentPath{docsPath / "content"};
   path exportPath{docsPath / "out"};
@@ -29,11 +30,30 @@ void runExport() {
   try {
     create_directories(outTexPath);
 
+    std::ifstream themeFile;
+    if (theme != "default") {
+      path themeDir{themePath / theme};
+      if (!exists(themeDir)) {
+        std::cerr << "Theme not found: " << theme << ". Using default theme"
+                  << std::endl;
+      } else {
+        themeFile.open(themeDir / "theme.tex");
+      }
+    } else {
+      std::cout << "Using default theme" << std::endl;
+      themeFile.open(themePath / "default.tex");
+    }
+
     std::ofstream latexFile{outTexPath / "__compiled.tex"};
-    latexFile << "\\documentclass{article}\n";
-    latexFile << "\\usepackage{graphicx}\n";
-    latexFile << "\\usepackage[utf8]{inputenc}\n";
-    latexFile << "\\usepackage{hyperref}\n";
+    if (themeFile && latexFile) {
+        std::string line;
+        while (getline(themeFile, line)) {
+            latexFile << line << "\n";
+            std::cout << line << "\n";
+        }
+    }
+    themeFile.close();
+
     latexFile << "\\title{" << title << "}\n";
     latexFile << "\\author{" << author << "}\n";
     latexFile << "\\begin{document}\n";
@@ -72,7 +92,7 @@ void runExport() {
       std::cerr << D_EXPORTING_FAILURE << std::endl;
       return;
     }
-    remove_all(outTexPath);
+    //remove_all(outTexPath);
     std::cout << "\033[1;32m" << D_EXPORTING_SUCCESS << outPdfPath
               << "\033[0m\n";
   } catch (const std::filesystem::filesystem_error &e) {
