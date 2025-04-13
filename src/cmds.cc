@@ -1,35 +1,37 @@
 #include "../include/cmds.h"
+#include "../include/const.h"
+#include <cstdlib>
 #include <filesystem>
 #include <fstream>
 #include <iostream>
+#include <sstream>
 
 using namespace std::filesystem;
 
 void runInit() {
-    path docsPath = "docs";
-    path assetsPath = docsPath / "assets";
-    path contentPath = docsPath / "content";
-    path pluginsPath = docsPath / "plugins";
-    path configPath = docsPath / "docgen.toml";
+    std::cout << D_SCAFFOLDING_PROCESS << P_DEFAULT_SCAFFOLD_PATH << std::endl;
+
+    path docsPath{P_DEFAULT_SCAFFOLD_PATH};
+    path assetsPath{docsPath / "assets"};
+    path contentPath{docsPath / "content"};
+    path pluginsPath{docsPath / "plugins"};
+    path themesPath{docsPath / "themes"};
+    path configPath{docsPath / "docgen.toml"};
+    std::string srcUrl{U_SCAFFOLDED_TOML};
 
     try {
         create_directories(assetsPath);
         create_directories(contentPath);
         create_directories(pluginsPath);
+        create_directories(themesPath);
 
-        std::ofstream configFile(configPath);
-        configFile << "# docgen Configuration" << std::endl;
-        configFile << "[config]" << std::endl;
-        configFile << "  title = \"My Documentation\"" << std::endl;
-        configFile << "  description = \"A description of the documentation...\"" << std::endl;
-        configFile << "  author = \"Your Name\"" << std::endl;
-        configFile << "  version = \"1.0\"" << std::endl;
-        configFile << "  theme = \"default\"" << std::endl;
-        configFile << "  output = \"out\"" << std::endl;
+        std::ostringstream cmd;
+        cmd << "wget" << " --no-verbose --show-progress -O " << configPath.string() << " " << srcUrl;
+        system(cmd.str().c_str());
 
-        std::cout << "Docs structure init successful" << std::endl;
+        std::cout << D_SCAFFOLDING_SUCCESS << std::endl;
     } catch (const filesystem_error& e) {
-        std::cerr << "Error creating directories: " << e.what() << std::endl;
+        std::cerr << D_SCAFFOLDING_FAILURE << e.what() << std::endl;
     } catch (const std::exception& e) {
         std::cerr << "Error: " << e.what() << std::endl;
     }

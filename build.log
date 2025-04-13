@@ -1,0 +1,13 @@
+This is pdfTeX, Version 3.141592653-2.6-1.40.26 (TeX Live 2024) (preloaded format=pdflatex)
+ restricted \write18 enabled.
+entering extended mode
+! I can't find file `yourfile.tex'.
+<*> yourfile.tex
+                
+(Press Enter to retry, or Control-D to exit)
+Please type another input file name
+! Emergency stop.
+<*> yourfile.tex
+                
+!  ==> Fatal error occurred, no output PDF file produced!
+Transcript written on texput.log.

@@ -1,10 +1,10 @@
 #include "../include/cmds.h"
+#include "../include/const.h"
 #include <iostream>
 
 int main(int argc, char *argv[]) {
     if (argc < 2) {
-        std::cerr << "USAGE:" << std::endl << "  docgen --init" << std::endl
-                  << "  docgen --export" << std::endl;
+        std::cerr << D_DESCR << std::endl << D_USAGE << std::endl;
     }
     else if (std::string(argv[1]) == "--init") {
         runInit();
