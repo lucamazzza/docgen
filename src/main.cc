@@ -1,5 +1,5 @@
-#include "../include/cmds.h"
-#include "../include/const.h"
+#include "../include/cmds.hh"
+#include "../include/const.hh"
 #include <iostream>
 
 int main(int argc, char *argv[]) {

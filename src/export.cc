@@ -1,6 +1,6 @@
-#include "../include/cmds.h"
-#include "../include/const.h"
-#include "../include/toml.h"
+#include "../include/cmds.hh"
+#include "../include/const.hh"
+#include "../include/toml.hh"
 #include <filesystem>
 #include <fstream>
 #include <iostream>

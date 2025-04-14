@@ -1,4 +1,4 @@
-#include "../include/cmds.h"
+#include "../include/cmds.hh"
 #include <iostream>
 #include <thread>
 #include <chrono>
