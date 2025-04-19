@@ -43,8 +43,8 @@
 # Build directory
 build/
 
-# Files with no extension
-
+# macOS Finder files
+.DS_Store
 
 # CMake files
 CMakeLists.txt.user
