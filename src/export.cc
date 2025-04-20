@@ -5,6 +5,7 @@
 #include <fstream>
 #include <iostream>
 #include <sstream>
+#include <set>
 
 using namespace std::filesystem;
 
@@ -48,7 +49,7 @@ void runExport() {
     latexFile << themeFile.rdbuf();
     themeFile.close();
 
-    latexFile << "\\title{" << title << "}\n";
+    latexFile << "\\title{\\textbf{" << title << "}}\n";
     latexFile << "\\author{" << author << "}\n";
     latexFile << "\\begin{document}\n";
     latexFile << "\\maketitle\n";
@@ -57,9 +58,16 @@ void runExport() {
       latexFile << "\\tableofcontents\n";
     latexFile << "\\newpage\n";
 
-    for (const auto &entry : directory_iterator(contentPath)) {
+    std::set<path> mdFiles;
+    for (const auto &entry : recursive_directory_iterator(contentPath)) {
       if (entry.path().extension() == ".md") {
-        std::string mdFile{entry.path().string()};
+        mdFiles.insert(entry.path());
+      }
+    }
+
+    for (const auto &entry : mdFiles) {
+      if (entry.extension() == ".md") {
+        std::string mdFile{entry.string()};
         std::ostringstream cmd;
         cmd << "pandoc \"" << mdFile << "\" -t latex -o "
             << outTexPath / "__compiled.tex";
@@ -73,6 +81,7 @@ void runExport() {
         latexFile << tmpTex.rdbuf();
         tmpTex.close();
       }
+      latexFile << "\\newpage\n";
     }
     latexFile << "\\end{document}\n";
     latexFile.close();
@@ -86,7 +95,7 @@ void runExport() {
       std::cerr << D_EXPORTING_FAILURE << std::endl;
       return;
     }
-    remove_all(outTexPath);
+    //remove_all(outTexPath);
     std::cout << "\033[1;32m" << D_EXPORTING_SUCCESS << " [" << outPdfPath
               << "]\033[0m\n";
   } catch (const std::filesystem::filesystem_error &e) {
