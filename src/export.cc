@@ -1,6 +1,7 @@
 #include "../include/cmds.hh"
 #include "../include/const.hh"
 #include "../include/toml.hh"
+#include <_stdio.h>
 #include <filesystem>
 #include <fstream>
 #include <iostream>
@@ -69,17 +70,19 @@ void runExport() {
       if (entry.extension() == ".md") {
         std::string mdFile{entry.string()};
         std::ostringstream cmd;
-        cmd << "pandoc \"" << mdFile << "\" -t latex -o "
-            << outTexPath / "__compiled.tex";
+        cmd << "pandoc -f markdown \"" << mdFile << "\" -t latex -o "
+            << outTexPath / "__chunks.tex";
         int result{std::system(cmd.str().c_str())};
         if (result != 0) {
           std::cerr << "Error converting " << mdFile << " to LaTeX."
                     << std::endl;
           return;
         }
-        std::ifstream tmpTex{outTexPath / "__compiled.tex"};
+        std::ifstream tmpTex{outTexPath / "__chunks.tex"};
         latexFile << tmpTex.rdbuf();
         tmpTex.close();
+        std::error_code ec;
+        remove(outTexPath / "__chunks.tex", ec);
       }
       latexFile << "\\newpage\n";
     }
